@@ -19,7 +19,7 @@ class window.AppView extends Backbone.View
     (@model.get 'dealerHand').on 'compareScores', => @compareScores()
 
   render: ->
-    @$el.children().detach()
+    # @$el.children().detach()
     @$el.html @template()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
@@ -30,8 +30,8 @@ class window.AppView extends Backbone.View
     dealHand = @model.get 'dealerHand'
     playScore = playHand.highestScore()
     dealScore = dealHand.highestScore()
-    $('.hit-button').remove()
-    $('.stand-button').remove()
+    $('.hit-button').css('display', 'none')
+    $('.stand-button').css('display', 'none')
     if playScore > dealScore
       setTimeout ( ->
         alert('You are the winner!')
@@ -46,9 +46,32 @@ class window.AppView extends Backbone.View
       ), 2000
     # debugger;
 
-  reset: ->
-    $('body').html(''); 
 
-    new AppView({
-      model: new App()
-    }).$el.appendTo('body');
+
+  reset: ->
+    # $('body').html('')
+    @$('.player-hand-container').html('') 
+    @$('.dealer-hand-container').html('') 
+    @$('.betting-container').html('') 
+    playHand = @model.get 'playerHand'
+    playHand.reset()
+    playHand.hit()
+    playHand.hit()
+    dealHand = @model.get 'dealerHand'
+    dealHand.reset()
+    dealHand.hit()
+    dealHand.first().flip()
+    dealHand.hit()
+
+    $('.hit-button').css('display', 'inline')
+    $('.stand-button').css('display', 'inline')
+
+    @$('.player-hand-container').html new HandView(collection: playHand).el
+    @$('.dealer-hand-container').html new HandView(collection: dealHand).el
+    @$('.betting-container').html new BettingView(model: @model.get 'chipCount').el
+
+    # new AppView({
+    #   model: new App()
+    # }).$el.appendTo('body');
+    # @render()
+    

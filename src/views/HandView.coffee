@@ -25,8 +25,8 @@ class window.HandView extends Backbone.View
 
   checkBust: ->
     if @collection.scores()[0] > 21 and !@collection.isDealer
-      $('.hit-button').remove()
-      $('.stand-button').remove()
+      $('.hit-button').css('display', 'none')
+      $('.stand-button').css('display', 'none')
       setTimeout ( ->
         alert('You bust, you lose!')
       ), 2000
@@ -42,8 +42,8 @@ class window.HandView extends Backbone.View
         setTimeout @getCard, 1000
     @getCard()
     if @collection.scores()[0] > 21 
-      $('.hit-button').remove()
-      $('.stand-button').remove()
+      # $('.hit-button').css('visibility', 'hidden')
+      # $('.stand-button').css('visibility', 'hidden')
       setTimeout ( ->
         alert('Dealer bust. You win!')
       ), 2000

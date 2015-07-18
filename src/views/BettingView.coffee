@@ -1,5 +1,5 @@
 class window.BettingView extends Backbone.View
-  template: _.template '<input> <button class="Bet">Bet</button> $<span class="chips"><%= chips %></span>'
+  template: _.template '<div class="betWrap"><input> <button class="Bet">Bet</button> $<span class="chips"><%= chips %></span></div>'
 
   initialize: ->
     @render()
@@ -22,3 +22,5 @@ class window.BettingView extends Backbone.View
     $('input').val('')
     $('.chips').text(@model.get('chips'))
     $('.chips').after('<span><br><br>Betted: $' + betted + '</span>')
+    $('.Bet').detach();
+    $('input').detach();
