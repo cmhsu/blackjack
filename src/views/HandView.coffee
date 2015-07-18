@@ -24,11 +24,12 @@ class window.HandView extends Backbone.View
   #     return handScores[0]
 
   checkBust: ->
-    console.log('checkbust')
     if @collection.scores()[0] > 21 and !@collection.isDealer
+      $('.hit-button').remove()
+      $('.stand-button').remove()
       setTimeout ( ->
         alert('You bust, you lose!')
-      ), 5
+      ), 15
   checkDealer: ->
     # highestScore = @collection.highestScore()
     # console.log(@collection.scores())
@@ -37,9 +38,12 @@ class window.HandView extends Backbone.View
     while @collection.highestScore() < 17
       @collection.hit()
     if @collection.scores()[0] > 21 
-      alert('Dealer bust. You win!')
+      $('.hit-button').remove()
+      $('.stand-button').remove()
+      setTimeout ( ->
+        alert('Dealer bust. You win!')
+      ), 15
     else 
-      console.log("score check triggered")
       @collection.trigger 'compareScores', @
     
 

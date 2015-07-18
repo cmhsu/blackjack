@@ -10,6 +10,7 @@ class window.AppView extends Backbone.View
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
     'click .stand-button': -> @model.get('dealerHand').stand()
+    'click .reset-button': -> @reset()
     # 'click .stand-button': -> @model.get('playerHand').saveScore()
 
   initialize: ->
@@ -27,10 +28,12 @@ class window.AppView extends Backbone.View
     dealHand = @model.get 'dealerHand'
     playScore = playHand.highestScore()
     dealScore = dealHand.highestScore()
+    $('.hit-button').remove()
+    $('.stand-button').remove()
     if playScore > dealScore
       setTimeout ( ->
         alert('You are the winner!')
-      ), 5
+      ), 15
     else if dealScore > playScore
       setTimeout ( ->
         alert('Dealer is the winner.')
@@ -40,3 +43,9 @@ class window.AppView extends Backbone.View
         alert('It\'s a tie!')
       ), 5
     # debugger;
+
+  reset: ->
+    $('body').html(''); 
+    new AppView({
+      model: new App()
+    }).$el.appendTo('body');
