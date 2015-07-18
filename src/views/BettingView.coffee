@@ -17,7 +17,8 @@ class window.BettingView extends Backbone.View
     $('.chips').text(chipDiff)
 
   setBet: ->
-    @model.set('chips', @model.get('chips') - $('input').val())
+    betted = $('input').val()
+    @model.set('chips', @model.get('chips') - betted)
     $('input').val('')
     $('.chips').text(@model.get('chips'))
-    console.log(@model.get('chips'))
+    $('.chips').after('<span><br><br>Betted: $' + betted + '</span>')
