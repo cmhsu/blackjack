@@ -24,3 +24,9 @@ class window.BettingView extends Backbone.View
     $('.chips').after('<span><br><br>Betted: $' + betted + '</span>')
     $('.Bet').detach();
     $('input').detach();
+    @model.trigger 'betSet' , @
+    
+
+
+
+

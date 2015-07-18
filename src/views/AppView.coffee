@@ -15,14 +15,17 @@ class window.AppView extends Backbone.View
     # 'click .stand-button': -> @model.get('playerHand').saveScore()
 
   initialize: ->
+    @dealView = new HandView(collection:@model.get 'dealerHand').el
+    @handView = new HandView(collection:@model.get 'playerHand').el
     @render()
     (@model.get 'dealerHand').on 'compareScores', => @compareScores()
+    (@model.get 'chipCount').on 'betSet', => @flipCards()
 
   render: ->
     # @$el.children().detach()
     @$el.html @template()
-    @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
-    @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
+    @$('.player-hand-container').html @handView
+    @$('.dealer-hand-container').html @dealView
     @$('.betting-container').html new BettingView(model: @model.get 'chipCount').el
 
   compareScores: ->
@@ -46,7 +49,13 @@ class window.AppView extends Backbone.View
       ), 2000
     # debugger;
 
-
+  flipCards: ->
+    console.log('event received')
+    playHand = @model.get 'playerHand' 
+    dealHand = @model.get 'dealerHand'
+    playHand.at(0).flip()
+    playHand.at(1).flip()
+    dealHand.at(1).flip()
 
   reset: ->
     # $('body').html('')
@@ -56,19 +65,21 @@ class window.AppView extends Backbone.View
     playHand = @model.get 'playerHand'
     playHand.reset()
     playHand.hit()
+
     playHand.hit()
     dealHand = @model.get 'dealerHand'
     dealHand.reset()
     dealHand.hit()
     dealHand.first().flip()
     dealHand.hit()
+    @flipCards()
 
     $('.hit-button').css('display', 'inline')
     $('.stand-button').css('display', 'inline')
 
-    @$('.player-hand-container').html new HandView(collection: playHand).el
-    @$('.dealer-hand-container').html new HandView(collection: dealHand).el
-    @$('.betting-container').html new BettingView(model: @model.get 'chipCount').el
+    # @trigger 'reset'
+
+    @render()
 
     # new AppView({
     #   model: new App()

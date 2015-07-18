@@ -9,6 +9,7 @@ class window.HandView extends Backbone.View
     @render()
     @collection.on 'add', => @checkBust()
     @collection.on 'stand', => @checkDealer()
+    @collection.on 'reset', => @undelegate()
 
   render: ->
     @$el.children().detach()
@@ -50,7 +51,12 @@ class window.HandView extends Backbone.View
     else
       @collection.trigger 'compareScores', @
     
+  undelegate: ->
+     # // COMPLETELY UNBIND THE VIEW
+    @undelegateEvents();
 
+    @$el.removeData().unbind(); 
+    
 
 
 
