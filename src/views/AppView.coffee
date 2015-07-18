@@ -28,9 +28,15 @@ class window.AppView extends Backbone.View
     playScore = playHand.highestScore()
     dealScore = dealHand.highestScore()
     if playScore > dealScore
-      alert('You are the winner!')
+      setTimeout ( ->
+        alert('You are the winner!')
+      ), 5
     else if dealScore > playScore
-      alert('Dealer is the winner.')
+      setTimeout ( ->
+        alert('Dealer is the winner.')
+      ), 5
     else
-      alert('It\'s a tie!')
+      setTimeout ( ->
+        alert('It\'s a tie!')
+      ), 5
     # debugger;

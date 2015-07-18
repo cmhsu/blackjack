@@ -26,8 +26,9 @@ class window.HandView extends Backbone.View
   checkBust: ->
     console.log('checkbust')
     if @collection.scores()[0] > 21 and !@collection.isDealer
-      alert('You bust, you lose!')
-  
+      setTimeout ( ->
+        alert('You bust, you lose!')
+      ), 5
   checkDealer: ->
     # highestScore = @collection.highestScore()
     # console.log(@collection.scores())
