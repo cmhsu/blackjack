@@ -29,21 +29,25 @@ class window.HandView extends Backbone.View
       $('.stand-button').remove()
       setTimeout ( ->
         alert('You bust, you lose!')
-      ), 15
+      ), 1100
   checkDealer: ->
     # highestScore = @collection.highestScore()
     # console.log(@collection.scores())
 
     @collection.at(0).flip()
-    while @collection.highestScore() < 17
-      @collection.hit()
+    @getCard = =>
+      # debugger;
+      if @collection.highestScore() < 17
+        @collection.hit()
+        setTimeout @getCard, 1000
+    @getCard()
     if @collection.scores()[0] > 21 
       $('.hit-button').remove()
       $('.stand-button').remove()
       setTimeout ( ->
         alert('Dealer bust. You win!')
-      ), 15
-    else 
+      ), 1100
+    else
       @collection.trigger 'compareScores', @
     
 

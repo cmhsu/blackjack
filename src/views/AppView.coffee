@@ -33,15 +33,15 @@ class window.AppView extends Backbone.View
     if playScore > dealScore
       setTimeout ( ->
         alert('You are the winner!')
-      ), 15
+      ), 2000
     else if dealScore > playScore
       setTimeout ( ->
         alert('Dealer is the winner.')
-      ), 5
+      ), 2000
     else
       setTimeout ( ->
         alert('It\'s a tie!')
-      ), 5
+      ), 2000
     # debugger;
 
   reset: ->
