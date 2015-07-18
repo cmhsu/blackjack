@@ -3,6 +3,7 @@ class window.AppView extends Backbone.View
     <button class="hit-button">Hit</button> 
     <button class="stand-button">Stand</button>
     <button class="reset-button">Reset</button>  
+    <div class="betting-container"></div>  
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
   '
@@ -22,6 +23,7 @@ class window.AppView extends Backbone.View
     @$el.html @template()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
+    @$('.betting-container').html new BettingView(model: @model.get 'chipCount').el
 
   compareScores: ->
     playHand = @model.get 'playerHand' 
@@ -46,6 +48,7 @@ class window.AppView extends Backbone.View
 
   reset: ->
     $('body').html(''); 
+
     new AppView({
       model: new App()
     }).$el.appendTo('body');

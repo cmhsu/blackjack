@@ -29,7 +29,7 @@ class window.HandView extends Backbone.View
       $('.stand-button').remove()
       setTimeout ( ->
         alert('You bust, you lose!')
-      ), 1100
+      ), 2000
   checkDealer: ->
     # highestScore = @collection.highestScore()
     # console.log(@collection.scores())
@@ -46,7 +46,7 @@ class window.HandView extends Backbone.View
       $('.stand-button').remove()
       setTimeout ( ->
         alert('Dealer bust. You win!')
-      ), 1100
+      ), 2000
     else
       @collection.trigger 'compareScores', @
     

@@ -1,6 +1,7 @@
 body {
   background-image: url("../img/Chips.jpg");
   background-position: center;
+  color: white;
 }
 
 h2 {
@@ -43,6 +44,10 @@ h2 {
     -webkit-animation-delay: 0.15s;
     animation: slide 1s forwards;
     animation-delay: 0.15s;
+}
+
+input {
+  margin-top: 10px;
 }
 
 @-webkit-keyframes slide {
