@@ -3,8 +3,14 @@ class window.Hand extends Backbone.Collection
 
   initialize: (array, @deck, @isDealer) ->
 
+  stand: ->
+    @trigger 'stand' , @
+
   hit: ->
     @add(@deck.pop())
+
+  saveScore: ->
+    @playerScore = @highestScore();  
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -20,4 +26,11 @@ class window.Hand extends Backbone.Collection
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
 
-
+  highestScore: ->
+    #take the highest of two scores
+    # debugger;
+    handScores = @scores()
+    if handScores[1] <= 21
+      return handScores[1]
+    else
+      return handScores[0]
