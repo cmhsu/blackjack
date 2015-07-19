@@ -52,7 +52,12 @@
       if ((this.model.get('dealerHand')).scores()[0] > 21) {
         $('.hit-button').remove();
         $('.stand-button').remove();
-        return $('.winner').text('Dealer bust. You win!');
+        $('.winner').text('Dealer bust. You win!');
+        return setTimeout((function() {
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
       } else {
         return this.compareScores();
       }
@@ -67,11 +72,26 @@
       $('.hit-button').remove();
       $('.stand-button').remove();
       if (playScore > dealScore) {
-        return $('.winner').text('You are the winner!');
+        $('.winner').text('You are the winner!');
+        return setTimeout((function() {
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
       } else if (dealScore > playScore) {
-        return $('.winner').text('Dealer is the winner.');
+        $('.winner').text('Dealer is the winner.');
+        return setTimeout((function() {
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
       } else {
-        return $('.winner').text('It\'s a tie!');
+        $('.winner').text('It\'s a tie!');
+        return setTimeout((function() {
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
       }
     };
 

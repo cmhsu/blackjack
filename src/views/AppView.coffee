@@ -36,6 +36,9 @@ class window.AppView extends Backbone.View
       $('.hit-button').remove()
       $('.stand-button').remove()
       $('.winner').text('Dealer bust. You win!')
+      setTimeout ( ->
+        $('.winner').css('color': 'white')
+      ), 1600
     else
       @compareScores()
 
@@ -48,10 +51,19 @@ class window.AppView extends Backbone.View
     $('.stand-button').remove()
     if playScore > dealScore
       $('.winner').text('You are the winner!')
+      setTimeout ( ->
+        $('.winner').css('color': 'white')
+      ), 1600
     else if dealScore > playScore
       $('.winner').text('Dealer is the winner.')
+      setTimeout ( ->
+        $('.winner').css('color': 'white')
+      ), 1600
     else
       $('.winner').text('It\'s a tie!')
+      setTimeout ( ->
+        $('.winner').css('color': 'white')
+      ), 1600
     # debugger;
 
   reset: ->

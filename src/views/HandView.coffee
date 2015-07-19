@@ -28,6 +28,9 @@ class window.HandView extends Backbone.View
       $('.hit-button').remove()
       $('.stand-button').remove()
       $('.winner').text('You bust, you lose!')
+      setTimeout ( ->
+        $('.winner').css('color': 'white')
+      ), 1600
 #  checkDealer: ->
     # highestScore = @collection.highestScore()
     # console.log(@collection.scores())

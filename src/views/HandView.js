@@ -48,7 +48,12 @@
       if (this.collection.scores()[0] > 21 && !this.collection.isDealer) {
         $('.hit-button').remove();
         $('.stand-button').remove();
-        return $('.winner').text('You bust, you lose!');
+        $('.winner').text('You bust, you lose!');
+        return setTimeout((function() {
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
       }
     };
 
