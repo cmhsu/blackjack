@@ -1,7 +1,7 @@
 class window.AppView extends Backbone.View
   template: _.template '
-    <button class="hit-button">Hit</button> 
-    <button class="stand-button">Stand</button>
+    <button disabled class="hit-button">Hit</button> 
+    <button disabled class="stand-button">Stand</button>
     <button class="reset-button">Reset</button>  
     <div class="betting-container"></div>  
     <div class="player-hand-container"></div>
@@ -20,6 +20,17 @@ class window.AppView extends Backbone.View
     @render()
     (@model.get 'dealerHand').on 'compareScores', => @compareScores()
     (@model.get 'chipCount').on 'betSet', => @flipCards()
+
+  toggleButtons: ->
+    hitButton = $('.hit-button')
+    standButton = $('.stand-button')
+    if hitButton.attr('disabled')
+      hitButton.attr('disabled', false)
+      standButton.attr('disabled', false)
+    else
+      hitButton.attr('disabled', true)
+      standButton.attr('disabled', true)
+
 
   render: ->
     # @$el.children().detach()
@@ -50,7 +61,7 @@ class window.AppView extends Backbone.View
     # debugger;
 
   flipCards: ->
-    console.log('event received')
+    @toggleButtons()
     playHand = @model.get 'playerHand' 
     dealHand = @model.get 'dealerHand'
     playHand.at(0).flip()
