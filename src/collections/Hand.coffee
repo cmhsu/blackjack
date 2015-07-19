@@ -34,3 +34,4 @@ class window.Hand extends Backbone.Collection
       return handScores[1]
     else
       return handScores[0]
+

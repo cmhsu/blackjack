@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "ChipCount.js",
+  "sourceRoot": "",
+  "sources": [
+    "ChipCount.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;AAAA,MAAA;;;EAAM,MAAM,CAAC;;;;;;;wBACX,UAAA,GAAY,SAAC,MAAD;aACV,IAAC,CAAA,GAAD,CACE;QAAA,KAAA,EAAO,IAAP;OADF;IADU;;;;KADiB,QAAQ,CAAC;AAAxC"
+}
