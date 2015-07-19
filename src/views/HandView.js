@@ -51,31 +51,14 @@
 
     HandView.prototype.checkBust = function() {
       if (this.collection.scores()[0] > 21 && !this.collection.isDealer) {
-        $('.hit-button').css('display', 'none');
-        $('.stand-button').css('display', 'none');
+        $('.hit-button').remove();
+        $('.stand-button').remove();
+        $('.winner').text('You bust, you lose!');
         return setTimeout((function() {
-          return alert('You bust, you lose!');
-        }), 2000);
-      }
-    };
-
-    HandView.prototype.checkDealer = function() {
-      this.collection.at(0).flip();
-      this.getCard = (function(_this) {
-        return function() {
-          if (_this.collection.highestScore() < 17) {
-            _this.collection.hit();
-            return setTimeout(_this.getCard, 1000);
-          }
-        };
-      })(this);
-      this.getCard();
-      if (this.collection.scores()[0] > 21) {
-        return setTimeout((function() {
-          return alert('Dealer bust. You win!');
-        }), 2000);
-      } else {
-        return this.collection.trigger('compareScores', this);
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
       }
     };
 

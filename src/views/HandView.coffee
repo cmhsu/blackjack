@@ -28,30 +28,37 @@ class window.HandView extends Backbone.View
 
   checkBust: ->
     if @collection.scores()[0] > 21 and !@collection.isDealer
-      $('.hit-button').css('display', 'none')
-      $('.stand-button').css('display', 'none')
+      $('.hit-button').remove()
+      $('.stand-button').remove()
+      $('.winner').text('You bust, you lose!')
       setTimeout ( ->
-        alert('You bust, you lose!')
-      ), 2000
-  checkDealer: ->
+        $('.winner').css('color': 'white')
+      ), 1600
+#  checkDealer: ->
     # highestScore = @collection.highestScore()
     # console.log(@collection.scores())
 
-    @collection.at(0).flip()
-    @getCard = =>
-      # debugger;
-      if @collection.highestScore() < 17
-        @collection.hit()
-        setTimeout @getCard, 1000
-    @getCard()
-    if @collection.scores()[0] > 21 
-      # $('.hit-button').css('visibility', 'hidden')
-      # $('.stand-button').css('visibility', 'hidden')
-      setTimeout ( ->
-        alert('Dealer bust. You win!')
-      ), 2000
-    else
-      @collection.trigger 'compareScores', @
+#    @$('.score').text @collection.highestScore()
+#    @collection.at(0).flip()
+
+#    @getCard = =>
+#      # debugger;
+#      if @collection.highestScore() < 17
+#        @collection.hit()
+#        setTimeout @getCard, 1000
+#    @getCard()
+
+
+#    while @collection.highestScore() < 17
+#      @collection.hit()
+#    if @collection.scores()[0] > 21
+#      $('.hit-button').remove()
+#      $('.stand-button').remove()
+#      setTimeout ( ->
+#        alert('Dealer bust. You win!')
+#      ), 1100
+#    else
+#      @collection.trigger 'compareScores', @
     
   undelegate: ->
      # // COMPLETELY UNBIND THE VIEW

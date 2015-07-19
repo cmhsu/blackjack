@@ -14,8 +14,12 @@
       var deck;
       this.set('deck', deck = new Deck());
       this.set('playerHand', deck.dealPlayer());
+<<<<<<< HEAD
       this.set('dealerHand', deck.dealDealer());
       return this.set('chipCount', new ChipCount());
+=======
+      return this.set('dealerHand', deck.dealDealer());
+>>>>>>> startedOver
     };
 
     return App;

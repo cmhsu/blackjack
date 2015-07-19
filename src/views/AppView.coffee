@@ -6,11 +6,13 @@ class window.AppView extends Backbone.View
     <div class="betting-container"></div>  
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
+    <br>
+    <h1 class="winner"></h1>
   '
 
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
-    'click .stand-button': -> @model.get('dealerHand').stand()
+    'click .stand-button': -> @standClicked()
     'click .reset-button': -> @reset()
     # 'click .stand-button': -> @model.get('playerHand').saveScore()
 
@@ -32,12 +34,29 @@ class window.AppView extends Backbone.View
       standButton.attr('disabled', true)
 
 
+
   render: ->
     # @$el.children().detach()
     @$el.html @template()
     @$('.player-hand-container').html @handView
     @$('.dealer-hand-container').html @dealView
     @$('.betting-container').html new BettingView(model: @model.get 'chipCount').el
+
+  standClicked: ->
+#    @model.get('dealerHand').stand()
+    @model.get('dealerHand').at(0).flip()
+
+    while (@model.get 'dealerHand').highestScore() < 17
+      (@model.get 'dealerHand').hit()
+    if (@model.get 'dealerHand').scores()[0] > 21
+      $('.hit-button').remove()
+      $('.stand-button').remove()
+      $('.winner').text('Dealer bust. You win!')
+      setTimeout ( ->
+        $('.winner').css('color': 'white')
+      ), 1600
+    else
+      @compareScores()
 
   compareScores: ->
     playHand = @model.get 'playerHand' 
@@ -47,17 +66,20 @@ class window.AppView extends Backbone.View
     $('.hit-button').css('display', 'none')
     $('.stand-button').css('display', 'none')
     if playScore > dealScore
+      $('.winner').text('You are the winner!')
       setTimeout ( ->
-        alert('You are the winner!')
-      ), 2000
+        $('.winner').css('color': 'white')
+      ), 1600
     else if dealScore > playScore
+      $('.winner').text('Dealer is the winner.')
       setTimeout ( ->
-        alert('Dealer is the winner.')
-      ), 2000
+        $('.winner').css('color': 'white')
+      ), 1600
     else
+      $('.winner').text('It\'s a tie!')
       setTimeout ( ->
-        alert('It\'s a tie!')
-      ), 2000
+        $('.winner').css('color': 'white')
+      ), 1600
     # debugger;
 
   flipCards: ->

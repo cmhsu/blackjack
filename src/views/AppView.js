@@ -10,14 +10,14 @@
       return AppView.__super__.constructor.apply(this, arguments);
     }
 
-    AppView.prototype.template = _.template('<button disabled class="hit-button">Hit</button> <button disabled class="stand-button">Stand</button> <button class="reset-button">Reset</button> <div class="betting-container"></div> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div>');
+    AppView.prototype.template = _.template('<button disabled class="hit-button">Hit</button> <button disabled class="stand-button">Stand</button> <button class="reset-button">Reset</button> <div class="betting-container"></div> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div> <br> <h1 class="winner"></h1>');
 
     AppView.prototype.events = {
       'click .hit-button': function() {
         return this.model.get('playerHand').hit();
       },
       'click .stand-button': function() {
-        return this.model.get('dealerHand').stand();
+        return this.standClicked();
       },
       'click .reset-button': function() {
         return this.reset();
@@ -66,6 +66,25 @@
       }).el);
     };
 
+    AppView.prototype.standClicked = function() {
+      this.model.get('dealerHand').at(0).flip();
+      while ((this.model.get('dealerHand')).highestScore() < 17) {
+        (this.model.get('dealerHand')).hit();
+      }
+      if ((this.model.get('dealerHand')).scores()[0] > 21) {
+        $('.hit-button').remove();
+        $('.stand-button').remove();
+        $('.winner').text('Dealer bust. You win!');
+        return setTimeout((function() {
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
+      } else {
+        return this.compareScores();
+      }
+    };
+
     AppView.prototype.compareScores = function() {
       var dealHand, dealScore, playHand, playScore;
       playHand = this.model.get('playerHand');
@@ -75,17 +94,26 @@
       $('.hit-button').css('display', 'none');
       $('.stand-button').css('display', 'none');
       if (playScore > dealScore) {
+        $('.winner').text('You are the winner!');
         return setTimeout((function() {
-          return alert('You are the winner!');
-        }), 2000);
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
       } else if (dealScore > playScore) {
+        $('.winner').text('Dealer is the winner.');
         return setTimeout((function() {
-          return alert('Dealer is the winner.');
-        }), 2000);
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
       } else {
+        $('.winner').text('It\'s a tie!');
         return setTimeout((function() {
-          return alert('It\'s a tie!');
-        }), 2000);
+          return $('.winner').css({
+            'color': 'white'
+          });
+        }), 1600);
       }
     };
 

@@ -8,6 +8,10 @@ h2 {
   color: white;
 }
 
+h1 {
+  color: black;
+}
+
 .card {
   float: left;
   border: solid 1px black;
