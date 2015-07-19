@@ -19,7 +19,7 @@ h1 {
 }
 
 .covered {
-  text-indent: -9999;
+  /*text-indent: -9999;*/
   width: 125px;
   border: 0px;
   height: 169px;
