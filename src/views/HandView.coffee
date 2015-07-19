@@ -9,6 +9,7 @@ class window.HandView extends Backbone.View
     @render()
     @collection.on 'add', => @checkBust()
     @collection.on 'stand', => @checkDealer()
+    @collection.on 'reset', => @undelegate()
 
   render: ->
     @$el.children().detach()
@@ -16,6 +17,8 @@ class window.HandView extends Backbone.View
     @$el.append @collection.map (card) ->
       new CardView(model: card).$el
     @$('.score').text @collection.highestScore()
+    # if @collection.hasAce() and !(@collection.model.get('revealed'))
+    #   @$('.score').text 0
 
   # checkScore: (handScores)->
   #   if handScores[1] <= 21
@@ -25,28 +28,37 @@ class window.HandView extends Backbone.View
 
   checkBust: ->
     if @collection.scores()[0] > 21 and !@collection.isDealer
-      $('.hit-button').remove()
-      $('.stand-button').remove()
+      $('.hit-button').css('display', 'none')
+      $('.stand-button').css('display', 'none')
       setTimeout ( ->
         alert('You bust, you lose!')
-      ), 15
+      ), 2000
   checkDealer: ->
     # highestScore = @collection.highestScore()
     # console.log(@collection.scores())
 
     @collection.at(0).flip()
-    while @collection.highestScore() < 17
-      @collection.hit()
+    @getCard = =>
+      # debugger;
+      if @collection.highestScore() < 17
+        @collection.hit()
+        setTimeout @getCard, 1000
+    @getCard()
     if @collection.scores()[0] > 21 
-      $('.hit-button').remove()
-      $('.stand-button').remove()
+      # $('.hit-button').css('visibility', 'hidden')
+      # $('.stand-button').css('visibility', 'hidden')
       setTimeout ( ->
         alert('Dealer bust. You win!')
-      ), 15
-    else 
+      ), 2000
+    else
       @collection.trigger 'compareScores', @
     
+  undelegate: ->
+     # // COMPLETELY UNBIND THE VIEW
+    @undelegateEvents();
 
+    @$el.removeData().unbind(); 
+    
 
 
 

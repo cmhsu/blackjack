@@ -13,7 +13,7 @@ class window.Hand extends Backbone.Collection
     @playerScore = @highestScore();  
 
   hasAce: -> @reduce (memo, card) ->
-    memo or card.get('value') is 1
+    memo or card.get('value') is 1 and card.get 'revealed'
   , 0
 
   minScore: -> @reduce (score, card) ->
