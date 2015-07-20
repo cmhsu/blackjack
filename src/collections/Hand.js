@@ -22,7 +22,8 @@
     };
 
     Hand.prototype.hit = function() {
-      return this.add(this.deck.pop());
+      this.add(this.deck.pop());
+      return $('.placeBet').attr('disabled', 'true');
     };
 
     Hand.prototype.saveScore = function() {

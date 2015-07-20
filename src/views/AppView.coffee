@@ -1,11 +1,13 @@
 class window.AppView extends Backbone.View
+  className: 'appBody'
+
   template: _.template '
     <button class="hit-button">Hit</button> 
     <button class="stand-button">Stand</button>
-    <button class="reset-button">Reset</button>  
+    <button class="reset-button">Reset</button>
+    <br><br>
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
-    <br>
     <h1 class="winner"></h1>
   '
 
@@ -17,6 +19,8 @@ class window.AppView extends Backbone.View
   initialize: ->
     @render()
     (@model.get 'dealerHand').on 'compareScores', => @compareScores()
+#    (@model.get 'playerHand').on 'youLose', => @model.get('bet')
+    console.log(@model)
 
   render: ->
     @$el.children().detach()
@@ -27,6 +31,7 @@ class window.AppView extends Backbone.View
   standClicked: ->
     $('.hit-button').remove()
     $('.stand-button').remove()
+    $('.placeBet').attr('disabled', 'true')
     @model.get('dealerHand').at(0).flip()
 
     getCard = =>
@@ -44,6 +49,7 @@ class window.AppView extends Backbone.View
         $('.hit-button').remove()
         $('.stand-button').remove()
         $('.winner').text('Dealer bust. You win!')
+        (@model.get 'bet').trigger('youWon')
         $('.winner').css('color': 'white')
       else
         @compareScores()
@@ -59,15 +65,18 @@ class window.AppView extends Backbone.View
     if playScore > dealScore
       $('.winner').text('You are the winner!')
       $('.winner').css('color': 'white')
+      (@model.get 'bet').trigger('youWon')
     else if dealScore > playScore
       $('.winner').text('Dealer is the winner.')
       $('.winner').css('color': 'white')
     else
       $('.winner').text('It\'s a tie!')
       $('.winner').css('color': 'white')
+      (@model.get 'bet').trigger('youTied')
 
   reset: ->
-    $('body').html(''); 
+    $('.appBody').html('');
     new AppView({
       model: new App()
     }).$el.appendTo('body');
+    $('.placeBet').attr('disabled', false)

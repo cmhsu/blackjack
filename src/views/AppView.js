@@ -10,7 +10,9 @@
       return AppView.__super__.constructor.apply(this, arguments);
     }
 
-    AppView.prototype.template = _.template('<button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <button class="reset-button">Reset</button> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div> <br> <h1 class="winner"></h1>');
+    AppView.prototype.className = 'appBody';
+
+    AppView.prototype.template = _.template('<button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <button class="reset-button">Reset</button> <br><br> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div> <h1 class="winner"></h1>');
 
     AppView.prototype.events = {
       'click .hit-button': function() {
@@ -26,11 +28,12 @@
 
     AppView.prototype.initialize = function() {
       this.render();
-      return (this.model.get('dealerHand')).on('compareScores', (function(_this) {
+      (this.model.get('dealerHand')).on('compareScores', (function(_this) {
         return function() {
           return _this.compareScores();
         };
       })(this));
+      return console.log(this.model);
     };
 
     AppView.prototype.render = function() {
@@ -48,6 +51,7 @@
       var getCard;
       $('.hit-button').remove();
       $('.stand-button').remove();
+      $('.placeBet').attr('disabled', 'true');
       this.model.get('dealerHand').at(0).flip();
       getCard = (function(_this) {
         return function() {
@@ -68,6 +72,7 @@
             $('.hit-button').remove();
             $('.stand-button').remove();
             $('.winner').text('Dealer bust. You win!');
+            (_this.model.get('bet')).trigger('youWon');
             return $('.winner').css({
               'color': 'white'
             });
@@ -88,9 +93,10 @@
       $('.stand-button').remove();
       if (playScore > dealScore) {
         $('.winner').text('You are the winner!');
-        return $('.winner').css({
+        $('.winner').css({
           'color': 'white'
         });
+        return (this.model.get('bet')).trigger('youWon');
       } else if (dealScore > playScore) {
         $('.winner').text('Dealer is the winner.');
         return $('.winner').css({
@@ -98,17 +104,19 @@
         });
       } else {
         $('.winner').text('It\'s a tie!');
-        return $('.winner').css({
+        $('.winner').css({
           'color': 'white'
         });
+        return (this.model.get('bet')).trigger('youTied');
       }
     };
 
     AppView.prototype.reset = function() {
-      $('body').html('');
-      return new AppView({
+      $('.appBody').html('');
+      new AppView({
         model: new App()
       }).$el.appendTo('body');
+      return $('.placeBet').attr('disabled', false);
     };
 
     return AppView;

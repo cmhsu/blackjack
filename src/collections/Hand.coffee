@@ -8,6 +8,7 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     @add(@deck.pop())
+    $('.placeBet').attr('disabled', 'true')
 
   saveScore: ->
     @playerScore = @highestScore();  

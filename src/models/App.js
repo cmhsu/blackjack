@@ -14,7 +14,9 @@
       var deck;
       this.set('deck', deck = new Deck());
       this.set('playerHand', deck.dealPlayer());
-      return this.set('dealerHand', deck.dealDealer());
+      this.set('dealerHand', deck.dealDealer());
+      this.set('bet', window.bet);
+      return this.set('betView', window.betView);
     };
 
     return App;

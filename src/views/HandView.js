@@ -49,6 +49,7 @@
         $('.hit-button').remove();
         $('.stand-button').remove();
         $('.winner').text('You bust, you lose!');
+        this.collection.trigger('youLose');
         return setTimeout((function() {
           $('.winner').css({
             'color': 'white'
