@@ -27,11 +27,11 @@
     };
 
     Deck.prototype.dealPlayer = function() {
-      return new Hand([this.pop(), this.pop()], this);
+      return new Hand([this.pop().flip(), this.pop().flip()], this);
     };
 
     Deck.prototype.dealDealer = function() {
-      return new Hand([this.pop().flip(), this.pop()], this, true);
+      return new Hand([this.pop().flip(), this.pop().flip()], this, true);
     };
 
     return Deck;

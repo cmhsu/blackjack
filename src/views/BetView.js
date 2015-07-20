@@ -52,6 +52,9 @@
 
     BetView.prototype.betPlaced = function() {
       var amountBet;
+      this.model.trigger('showCards');
+      $('.hit-button').attr('disabled', false);
+      $('.stand-button').attr('disabled', false);
       amountBet = $('.betInput').val();
       if (isNaN(amountBet) || amountBet < 0) {
         return alert('Please enter a valid number.');

@@ -30,6 +30,9 @@ class window.BetView extends Backbone.View
     @render()
 
   betPlaced: ->
+    @model.trigger('showCards')
+    $('.hit-button').attr('disabled', false)
+    $('.stand-button').attr('disabled', false)
     amountBet = $('.betInput').val()
     if isNaN(amountBet) or amountBet < 0
       alert('Please enter a valid number.')

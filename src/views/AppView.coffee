@@ -2,8 +2,8 @@ class window.AppView extends Backbone.View
   className: 'appBody'
 
   template: _.template '
-    <button class="hit-button">Hit</button> 
-    <button class="stand-button">Stand</button>
+    <button class="hit-button" disabled>Hit</button>
+    <button class="stand-button" disabled>Stand</button>
     <button class="reset-button">Reset</button>
     <br><br>
     <div class="player-hand-container"></div>
@@ -20,13 +20,18 @@ class window.AppView extends Backbone.View
     @render()
     (@model.get 'dealerHand').on 'compareScores', => @compareScores()
 #    (@model.get 'playerHand').on 'youLose', => @model.get('bet')
-    console.log(@model)
+    (@model.get 'bet').on 'showCards', => @showCards()
 
   render: ->
     @$el.children().detach()
     @$el.html @template()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
+
+  showCards: ->
+    (@model.get 'playerHand').at(0).flip()
+    (@model.get 'playerHand').at(1).flip()
+    (@model.get 'dealerHand').at(1).flip()
 
   standClicked: ->
     $('.hit-button').remove()

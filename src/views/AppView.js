@@ -12,7 +12,7 @@
 
     AppView.prototype.className = 'appBody';
 
-    AppView.prototype.template = _.template('<button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <button class="reset-button">Reset</button> <br><br> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div> <h1 class="winner"></h1>');
+    AppView.prototype.template = _.template('<button class="hit-button" disabled>Hit</button> <button class="stand-button" disabled>Stand</button> <button class="reset-button">Reset</button> <br><br> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div> <h1 class="winner"></h1>');
 
     AppView.prototype.events = {
       'click .hit-button': function() {
@@ -33,7 +33,11 @@
           return _this.compareScores();
         };
       })(this));
-      return console.log(this.model);
+      return (this.model.get('bet')).on('showCards', (function(_this) {
+        return function() {
+          return _this.showCards();
+        };
+      })(this));
     };
 
     AppView.prototype.render = function() {
@@ -45,6 +49,12 @@
       return this.$('.dealer-hand-container').html(new HandView({
         collection: this.model.get('dealerHand')
       }).el);
+    };
+
+    AppView.prototype.showCards = function() {
+      (this.model.get('playerHand')).at(0).flip();
+      (this.model.get('playerHand')).at(1).flip();
+      return (this.model.get('dealerHand')).at(1).flip();
     };
 
     AppView.prototype.standClicked = function() {
