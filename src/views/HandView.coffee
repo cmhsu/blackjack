@@ -9,6 +9,7 @@ class window.HandView extends Backbone.View
     @render()
     @collection.on 'add', => @checkBust()
     @collection.on 'stand', => @checkDealer()
+    @$('.score').text(0)
 
   render: ->
     @$el.children().detach()

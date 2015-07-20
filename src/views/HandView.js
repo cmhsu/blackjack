@@ -26,11 +26,12 @@
           return _this.checkBust();
         };
       })(this));
-      return this.collection.on('stand', (function(_this) {
+      this.collection.on('stand', (function(_this) {
         return function() {
           return _this.checkDealer();
         };
       })(this));
+      return this.$('.score').text(0);
     };
 
     HandView.prototype.render = function() {
