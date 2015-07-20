@@ -12,7 +12,7 @@
 
     BetView.prototype.className = 'betting';
 
-    BetView.prototype.template = _.template('<input class="betInput"> <button class="placeBet">Place Bet</button>' + ' Chip Count:' + ' $<span class="moneyLeft"><%= money %></span> <br><br>');
+    BetView.prototype.template = _.template('<input class="betInput"> <button class="placeBet">Place Bet</button><br><br>' + ' Chip Count:' + ' $<span class="moneyLeft"><%= money %>.</span> Bet: $<%= betAmount %> <br><br>');
 
     BetView.prototype.initialize = function() {
       this.render();
@@ -21,9 +21,14 @@
           return _this.youWon();
         };
       })(this));
-      return this.model.on('youTied', (function(_this) {
+      this.model.on('youTied', (function(_this) {
         return function() {
           return _this.youTied();
+        };
+      })(this));
+      return this.model.on('resetBet', (function(_this) {
+        return function() {
+          return _this.resetBet();
         };
       })(this));
     };
@@ -38,6 +43,11 @@
 
     BetView.prototype.updateOnKeyDown = function() {
       return this.model.set('money', this.model.get('money') - $('.betInput').val());
+    };
+
+    BetView.prototype.resetBet = function() {
+      this.model.set('betAmount', 0);
+      return this.render();
     };
 
     BetView.prototype.betPlaced = function() {

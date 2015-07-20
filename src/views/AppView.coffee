@@ -80,3 +80,4 @@ class window.AppView extends Backbone.View
       model: new App()
     }).$el.appendTo('body');
     $('.placeBet').attr('disabled', false)
+    (@model.get 'bet').trigger('resetBet')

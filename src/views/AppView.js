@@ -116,7 +116,8 @@
       new AppView({
         model: new App()
       }).$el.appendTo('body');
-      return $('.placeBet').attr('disabled', false);
+      $('.placeBet').attr('disabled', false);
+      return (this.model.get('bet')).trigger('resetBet');
     };
 
     return AppView;

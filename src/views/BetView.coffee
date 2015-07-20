@@ -3,8 +3,9 @@ class window.BetView extends Backbone.View
 
   template: _.template '
     <input class="betInput">
-    <button class="placeBet">Place Bet</button>' +
-    ' Chip Count:' + ' $<span class="moneyLeft"><%= money %></span>
+    <button class="placeBet">Place Bet</button><br><br>' +
+    ' Chip Count:' + ' $<span class="moneyLeft"><%= money %>.</span>
+    Bet: $<%= betAmount %>
     <br><br>
   '
 
@@ -12,6 +13,7 @@ class window.BetView extends Backbone.View
     @render()
     @model.on 'youWon', => @youWon()
     @model.on 'youTied', => @youTied()
+    @model.on 'resetBet', => @resetBet()
 
   events:
 #   'keydown .betInput': 'updateOnKeyDown'
@@ -22,6 +24,10 @@ class window.BetView extends Backbone.View
 
   updateOnKeyDown: ->
     @model.set('money', @model.get('money') - $('.betInput').val())
+
+  resetBet: ->
+    @model.set('betAmount', 0)
+    @render()
 
   betPlaced: ->
     amountBet = $('.betInput').val()
