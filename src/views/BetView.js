@@ -53,10 +53,16 @@
     BetView.prototype.betPlaced = function() {
       var amountBet;
       amountBet = $('.betInput').val();
-      this.model.set('money', this.model.get('money') - amountBet);
-      this.model.set('betAmount', amountBet);
-      this.render();
-      return $('.placeBet').attr('disabled', true);
+      if (isNaN(amountBet) || amountBet < 0) {
+        return alert('Please enter a valid number.');
+      } else if (this.model.get('money') < amountBet) {
+        return alert('You don\'t have that many chips');
+      } else {
+        this.model.set('money', this.model.get('money') - amountBet);
+        this.model.set('betAmount', amountBet);
+        this.render();
+        return $('.placeBet').attr('disabled', true);
+      }
     };
 
     BetView.prototype.youWon = function() {

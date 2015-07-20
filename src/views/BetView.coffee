@@ -31,10 +31,15 @@ class window.BetView extends Backbone.View
 
   betPlaced: ->
     amountBet = $('.betInput').val()
-    @model.set('money', @model.get('money') - amountBet)
-    @model.set('betAmount', amountBet)
-    @render()
-    $('.placeBet').attr('disabled', true)
+    if isNaN(amountBet) or amountBet < 0
+      alert('Please enter a valid number.')
+    else if @model.get('money') < amountBet
+      alert('You don\'t have that many chips')
+    else
+      @model.set('money', @model.get('money') - amountBet)
+      @model.set('betAmount', amountBet)
+      @render()
+      $('.placeBet').attr('disabled', true)
 
   youWon: ->
     @model.set('money', +@model.get('money') + (+@model.get('betAmount') * 2))
