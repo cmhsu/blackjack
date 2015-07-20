@@ -13,7 +13,6 @@ class window.AppView extends Backbone.View
     'click .hit-button': -> @model.get('playerHand').hit()
     'click .stand-button': -> @standClicked()
     'click .reset-button': -> @reset()
-    # 'click .stand-button': -> @model.get('playerHand').saveScore()
 
   initialize: ->
     @render()
@@ -26,29 +25,9 @@ class window.AppView extends Backbone.View
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
 
   standClicked: ->
-#    @model.get('dealerHand').stand()
     $('.hit-button').remove()
     $('.stand-button').remove()
     @model.get('dealerHand').at(0).flip()
-#
-#    while (@model.get 'dealerHand').minScore() < 17
-#      if (@model.get 'playerHand').highestScore() < @model.get('dealerHand').minScore()
-#        break
-#      (@model.get 'dealerHand').hit()
-
-
-#    checker = =>
-#      if ((@model.get 'dealerHand').minScore() < 17)
-#        if (@model.get 'playerHand').highestScore() < @model.get('dealerHand').minScore()
-#          clearInterval(timer)
-#          return
-#        (@model.get 'dealerHand').hit()
-#        debugger
-#        return
-#      else
-#        clearInterval(timer)
-#
-#    timer = setInterval(checker, 2000)
 
     getCard = =>
       setTimeout ( =>
@@ -60,35 +39,17 @@ class window.AppView extends Backbone.View
 
     getCard()
 
-#    timer = setInterval (->
-#      if @model.get('dealerHand').highestScore() < 17
-#        @model.get('dealerHand').hit()
-#      else
-#        clearInterval(timer)
-#    ), 1500
-
     setTimeout ( =>
       if (@model.get 'dealerHand').scores()[0] > 21
         $('.hit-button').remove()
         $('.stand-button').remove()
         $('.winner').text('Dealer bust. You win!')
-#        setTimeout ( =>
         $('.winner').css('color': 'white')
-#          return
-#        ), 1600
       else
         @compareScores()
     ), 2000
 
   compareScores: ->
-#    if (@model.get 'dealerHand').scores()[0] > 21
-#      $('.hit-button').remove()
-#      $('.stand-button').remove()
-#      $('.winner').text('Dealer bust. You win!')
-#      setTimeout ( ->
-#        $('.winner').css('color': 'white')
-#        return
-#      ), 1600
     playHand = @model.get 'playerHand'
     dealHand = @model.get 'dealerHand'
     playScore = playHand.highestScore()
@@ -97,23 +58,13 @@ class window.AppView extends Backbone.View
     $('.stand-button').remove()
     if playScore > dealScore
       $('.winner').text('You are the winner!')
-#      setTimeout ( ->
       $('.winner').css('color': 'white')
-#        return
-#      ), 1600
     else if dealScore > playScore
       $('.winner').text('Dealer is the winner.')
-#      setTimeout ( ->
       $('.winner').css('color': 'white')
-#        return
-#      ), 1600
     else
       $('.winner').text('It\'s a tie!')
-#      setTimeout ( ->
       $('.winner').css('color': 'white')
-#        return
-#      ), 1600
-    # debugger;
 
   reset: ->
     $('body').html(''); 
