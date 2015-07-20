@@ -46,14 +46,14 @@
 
     HandView.prototype.checkBust = function() {
       if (this.collection.scores()[0] > 21 && !this.collection.isDealer) {
-        $('.hit-button').remove();
-        $('.stand-button').remove();
         $('.winner').text('You bust, you lose!');
         return setTimeout((function() {
           $('.winner').css({
             'color': 'white'
           });
-        }), 1600);
+          $('.hit-button').remove();
+          $('.stand-button').remove();
+        }), 1300);
       }
     };
 

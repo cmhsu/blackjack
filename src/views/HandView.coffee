@@ -25,13 +25,13 @@ class window.HandView extends Backbone.View
 
   checkBust: ->
     if @collection.scores()[0] > 21 and !@collection.isDealer
-      $('.hit-button').remove()
-      $('.stand-button').remove()
       $('.winner').text('You bust, you lose!')
       setTimeout ( ->
         $('.winner').css('color': 'white')
+        $('.hit-button').remove()
+        $('.stand-button').remove()
         return
-      ), 1600
+      ), 1300
 #  checkDealer: ->
     # highestScore = @collection.highestScore()
     # console.log(@collection.scores())

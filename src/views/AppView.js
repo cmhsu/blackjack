@@ -45,25 +45,37 @@
     };
 
     AppView.prototype.standClicked = function() {
+      var getCard;
+      $('.hit-button').remove();
+      $('.stand-button').remove();
       this.model.get('dealerHand').at(0).flip();
-      while ((this.model.get('dealerHand')).minScore() < 17) {
-        if ((this.model.get('playerHand')).highestScore() < this.model.get('dealerHand').minScore()) {
-          break;
-        }
-        (this.model.get('dealerHand')).hit();
-      }
-      if ((this.model.get('dealerHand')).scores()[0] > 21) {
-        $('.hit-button').remove();
-        $('.stand-button').remove();
-        $('.winner').text('Dealer bust. You win!');
-        return setTimeout((function() {
-          $('.winner').css({
-            'color': 'white'
-          });
-        }), 1600);
-      } else {
-        return this.compareScores();
-      }
+      getCard = (function(_this) {
+        return function() {
+          return setTimeout((function() {
+            if ((_this.model.get('dealerHand')).highestScore() < 17) {
+              if (!((_this.model.get('playerHand')).highestScore() < _this.model.get('dealerHand').minScore())) {
+                (_this.model.get('dealerHand')).hit();
+                return getCard();
+              }
+            }
+          }), 400);
+        };
+      })(this);
+      getCard();
+      return setTimeout(((function(_this) {
+        return function() {
+          if ((_this.model.get('dealerHand')).scores()[0] > 21) {
+            $('.hit-button').remove();
+            $('.stand-button').remove();
+            $('.winner').text('Dealer bust. You win!');
+            return $('.winner').css({
+              'color': 'white'
+            });
+          } else {
+            return _this.compareScores();
+          }
+        };
+      })(this)), 2000);
     };
 
     AppView.prototype.compareScores = function() {
@@ -76,25 +88,19 @@
       $('.stand-button').remove();
       if (playScore > dealScore) {
         $('.winner').text('You are the winner!');
-        return setTimeout((function() {
-          $('.winner').css({
-            'color': 'white'
-          });
-        }), 1600);
+        return $('.winner').css({
+          'color': 'white'
+        });
       } else if (dealScore > playScore) {
         $('.winner').text('Dealer is the winner.');
-        return setTimeout((function() {
-          $('.winner').css({
-            'color': 'white'
-          });
-        }), 1600);
+        return $('.winner').css({
+          'color': 'white'
+        });
       } else {
         $('.winner').text('It\'s a tie!');
-        return setTimeout((function() {
-          $('.winner').css({
-            'color': 'white'
-          });
-        }), 1600);
+        return $('.winner').css({
+          'color': 'white'
+        });
       }
     };
 
