@@ -31,11 +31,11 @@ class window.BetView extends Backbone.View
     $('.placeBet').attr('disabled', true)
 
   youWon: ->
-    @model.set('money', @model.get('money') + (@model.get('betAmount') * 2))
+    @model.set('money', +@model.get('money') + (+@model.get('betAmount') * 2))
     @render()
     $('.placeBet').attr('disabled', true)
 
   youTied: ->
-    @model.set('money', @model.get('money') + (@model.get('betAmount')))
+    @model.set('money', +@model.get('money') + (+@model.get('betAmount')))
     @render()
     $('.placeBet').attr('disabled', true)

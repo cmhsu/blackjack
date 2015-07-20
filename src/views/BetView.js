@@ -50,13 +50,13 @@
     };
 
     BetView.prototype.youWon = function() {
-      this.model.set('money', this.model.get('money') + (this.model.get('betAmount') * 2));
+      this.model.set('money', +this.model.get('money') + (+this.model.get('betAmount') * 2));
       this.render();
       return $('.placeBet').attr('disabled', true);
     };
 
     BetView.prototype.youTied = function() {
-      this.model.set('money', this.model.get('money') + (this.model.get('betAmount')));
+      this.model.set('money', +this.model.get('money') + (+this.model.get('betAmount')));
       this.render();
       return $('.placeBet').attr('disabled', true);
     };
