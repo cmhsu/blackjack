@@ -50,7 +50,7 @@
         $('.stand-button').remove();
         $('.winner').text('You bust, you lose!');
         return setTimeout((function() {
-          return $('.winner').css({
+          $('.winner').css({
             'color': 'white'
           });
         }), 1600);

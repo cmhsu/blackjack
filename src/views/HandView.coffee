@@ -30,6 +30,7 @@ class window.HandView extends Backbone.View
       $('.winner').text('You bust, you lose!')
       setTimeout ( ->
         $('.winner').css('color': 'white')
+        return
       ), 1600
 #  checkDealer: ->
     # highestScore = @collection.highestScore()

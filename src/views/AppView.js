@@ -46,7 +46,10 @@
 
     AppView.prototype.standClicked = function() {
       this.model.get('dealerHand').at(0).flip();
-      while ((this.model.get('dealerHand')).highestScore() < 17) {
+      while ((this.model.get('dealerHand')).minScore() < 17) {
+        if ((this.model.get('playerHand')).highestScore() < this.model.get('dealerHand').minScore()) {
+          break;
+        }
         (this.model.get('dealerHand')).hit();
       }
       if ((this.model.get('dealerHand')).scores()[0] > 21) {
@@ -54,7 +57,7 @@
         $('.stand-button').remove();
         $('.winner').text('Dealer bust. You win!');
         return setTimeout((function() {
-          return $('.winner').css({
+          $('.winner').css({
             'color': 'white'
           });
         }), 1600);
@@ -74,21 +77,21 @@
       if (playScore > dealScore) {
         $('.winner').text('You are the winner!');
         return setTimeout((function() {
-          return $('.winner').css({
+          $('.winner').css({
             'color': 'white'
           });
         }), 1600);
       } else if (dealScore > playScore) {
         $('.winner').text('Dealer is the winner.');
         return setTimeout((function() {
-          return $('.winner').css({
+          $('.winner').css({
             'color': 'white'
           });
         }), 1600);
       } else {
         $('.winner').text('It\'s a tie!');
         return setTimeout((function() {
-          return $('.winner').css({
+          $('.winner').css({
             'color': 'white'
           });
         }), 1600);
